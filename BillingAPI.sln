@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33717.318
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BillingAPI", "BillingAPI\BillingAPI.csproj", "{FA335501-4338-4B5A-957B-4CC387237231}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FA335501-4338-4B5A-957B-4CC387237231}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA335501-4338-4B5A-957B-4CC387237231}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA335501-4338-4B5A-957B-4CC387237231}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA335501-4338-4B5A-957B-4CC387237231}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0F4C09B1-B031-4574-8D6E-E9875AE4E0E1}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "dJRtftMce+1kiRRx/sK2ToeMnJ/i+jM3k/N/f52qxxz9TzUQswSFYVowAO8VhCKBkhaxo+ftdRg4U7qGQrkZ6g==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Dell1\\Documents\\GitHub\\Vanier\\4th Semester\\System-Development\\BillingAPI\\BillingAPI\\BillingAPI\\BillingAPI.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Dell1\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
+    "C:\\Users\\Dell1\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
+    "C:\\Users\\Dell1\\.nuget\\packages\\swashbuckle.aspnetcore\\6.2.3\\swashbuckle.aspnetcore.6.2.3.nupkg.sha512",
+    "C:\\Users\\Dell1\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.2.3\\swashbuckle.aspnetcore.swagger.6.2.3.nupkg.sha512",
+    "C:\\Users\\Dell1\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.2.3\\swashbuckle.aspnetcore.swaggergen.6.2.3.nupkg.sha512",
+    "C:\\Users\\Dell1\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\6.2.3\\swashbuckle.aspnetcore.swaggerui.6.2.3.nupkg.sha512"
+  ],
+  "logs": []
+}
