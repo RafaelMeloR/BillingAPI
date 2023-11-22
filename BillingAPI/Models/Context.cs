@@ -16,6 +16,7 @@ namespace BillingAPI.Models
         public virtual DbSet<Product> Product { get; set; }
         public virtual DbSet<Orders> Orders { get; set; }
         public virtual DbSet<OrdersDetails> OrdersDetails { get; set; }
+        public virtual DbSet<Payment> Payment { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
         }
