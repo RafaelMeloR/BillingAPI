@@ -11,7 +11,7 @@ namespace BillingAPI.Models
         { }
 
         public virtual DbSet<User> User { get; set; }
-
+        public virtual DbSet<Address> Address { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
         }
