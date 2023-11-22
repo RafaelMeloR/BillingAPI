@@ -18,6 +18,7 @@ namespace BillingAPI.Models
         public virtual DbSet<OrdersDetails> OrdersDetails { get; set; }
         public virtual DbSet<Payment> Payment { get; set; }
         public virtual DbSet<Invoice> Invoice { get; set; }
+        public virtual DbSet<InvoiceDtls> InvoiceDtls { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
