@@ -20,7 +20,8 @@ namespace BillingAPI.Controllers
 
         [HttpGet("{id:int}")]
         [ApiVersion("1.0")]
-        public ActionResult<OrdersDetails> GetOrdersDetails(int id)
+        [Route("OrdersDetail")]
+        public ActionResult<OrdersDetails> GetOrdersDetail(int id)
         {
             if (id > 0)
             {
@@ -39,6 +40,21 @@ namespace BillingAPI.Controllers
                 }
             }
             return BadRequest("Id must be greater than 0");
+        }
+
+        [HttpGet("{id:int}")]
+        [ApiVersion("1.0")]
+        [Route("OrdersDetails")]
+        public ActionResult GetOrdersDetails(int id)
+        {
+            var ordersDetails = _context.OrdersDetails.Where(ordersDetails => ordersDetails.OrderId.Equals(id)).Select(ordersDetails =>
+                                     new
+                                     {
+                       ordersDetails.Id,
+                       ordersDetails.OrderId,
+                       ordersDetails.ProductId,
+                   }).ToList();
+            return Ok(ordersDetails);
         }
     }
 }

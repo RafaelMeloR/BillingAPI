@@ -29,7 +29,7 @@ namespace BillingAPI.Controllers
                 if (invoice != null)
                 {
                     dtoInvoice.Id = invoice.Id;
-                    dtoInvoice.OrdersId = invoice.OrdersId;
+                    dtoInvoice.OrderId = invoice.OrderId;
                     dtoInvoice.InvoiceDueDate = invoice.InvoiceDueDate;
                     dtoInvoice.InvoiceTotal = invoice.InvoiceTotal;
                     dtoInvoice.InvoiceDate = invoice.InvoiceDate;
@@ -47,6 +47,29 @@ namespace BillingAPI.Controllers
                 }
             }
             return BadRequest("Id must be greater than 0");
+        }
+
+        [HttpGet]
+        [ApiVersion("1.0")]
+        [Route("Invoices")]
+        public ActionResult GetInvoices()
+        {
+            var Invoices = _context.Invoice.Where(Invoice => Invoice.InvoiceStatus.Equals(true)).Select(Invoice =>
+            new
+            { 
+                Invoice.Id,
+                Invoice.OrderId,
+                Invoice.InvoiceDueDate,
+                Invoice.InvoiceTotal,
+                Invoice.InvoiceDate,
+                Invoice.InvoicePeriod,
+                Invoice.GST,
+                Invoice.QST,
+                Invoice.InvoiceNumber,
+                Invoice.InvoiceStatus,
+                Invoice.InvoiceAmount
+                }).ToList();
+            return Ok(Invoices);
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using BillingAPI.DTOS;
-using BillingAPI.Models;
-using Microsoft.AspNetCore.Http;
+using BillingAPI.Models; 
 using Microsoft.AspNetCore.Mvc;
 
 namespace BillingAPI.Controllers
@@ -51,6 +50,31 @@ namespace BillingAPI.Controllers
                
             }
             return BadRequest("Id must be greater than 0");
+        }
+
+        [HttpGet]
+        [ApiVersion("1.0")]
+        [Route("Users")]
+        public ActionResult GetUsers()
+        {
+            var users = _context.User.Select(user =>
+                                                            new
+                                                            {
+                                user.id,
+                                user.userName,
+                                user.password,
+                                user.email,
+                                user.name,
+                                user.lastName,
+                                user.addressId,
+                                user.phone,
+                                user.ipAddress,
+                                user.macAddress,
+                                user.lastLogin,
+                                user.usertype,
+                                user.status,
+                            }).ToList();
+            return Ok(users);
         }
     }
 }

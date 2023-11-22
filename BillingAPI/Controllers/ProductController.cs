@@ -41,5 +41,21 @@ namespace BillingAPI.Controllers
             }
             return BadRequest("Id must be greater than 0");
         }
+
+        [HttpGet]
+        [ApiVersion("1.0")]
+        [Route("Products")]
+        public ActionResult GetProducts()
+        {
+            var products = _context.Product.Select(product =>
+                                                new
+                                                {
+                               product.Id,
+                               product.Name,
+                               product.productUniquePrice,
+                               product.serviceId,
+                           }).ToList();
+            return Ok(products);
+        }
     }
 }

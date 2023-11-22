@@ -39,5 +39,19 @@ namespace BillingAPI.Controllers
             }
             return BadRequest("Id must be greater than 0");
         }
+
+        [HttpGet]
+        [ApiVersion("1.0")]
+        [Route("Services")]
+        public ActionResult GetServices()
+        {
+            var services = _context.Service.Select(service =>
+                                                new
+                                                {
+                               service.id,
+                               service.name,
+                           }).ToList();
+            return Ok(services);
+        }
     }
 }

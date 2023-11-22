@@ -3,7 +3,7 @@
     public class Invoice
     {
         public int Id { get; set; }
-        public int OrdersId { get; set; }
+        public int OrderId { get; set; }
         public DateTime InvoiceDueDate { get; set; }
         public decimal InvoiceTotal { get; set; }
         public DateTime InvoiceDate { get; set; }

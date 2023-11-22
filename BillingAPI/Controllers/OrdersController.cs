@@ -44,5 +44,24 @@ namespace BillingAPI.Controllers
             }
             return BadRequest("Id must be greater than 0");
         }
+
+        [HttpGet]
+        [ApiVersion("1.0")]
+        [Route("Orders")]
+        public ActionResult GetOrders()
+        {
+            var orders = _context.Orders.Select(orders =>
+                                     new
+                                     {
+                              orders.Id,
+                              orders.creationDate,
+                              orders.userId,
+                              orders.accountId,
+                              orders.updatedDate,
+                              orders.status,
+                              orders.accountNumber
+                          }).ToList();
+            return Ok(orders);
+        }
     }
 }

@@ -43,5 +43,23 @@ namespace BillingAPI.Controllers
             }
             return BadRequest("Id must be greater than 0");
         }
+
+        [HttpGet]
+        [ApiVersion("1.0")]
+        [Route("Payments")]
+        public ActionResult GetPayments()
+        {
+            var payments = _context.Payment.Select(payment =>
+                                                new
+                                                {
+                                         payment.Id,
+                                         payment.InvoiceId,
+                                         payment.PaymentMethod,
+                                         payment.PaymentDate,
+                                         payment.Amount,
+                                         payment.PaymentStatus
+                                     }).ToList();
+            return Ok(payments);
+        }
     }
 }

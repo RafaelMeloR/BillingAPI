@@ -20,7 +20,8 @@ namespace BillingAPI.Controllers
 
         [HttpGet("{id:int}")]
         [ApiVersion("1.0")]
-        public ActionResult<InvoiceDtls> GetInvoiceDtls(int id)
+        [Route("InvoiceDtl")]
+        public ActionResult<InvoiceDtls> GetInvoiceDtl(int id)
         {
             if (id > 0)
             {
@@ -40,6 +41,24 @@ namespace BillingAPI.Controllers
                 }
             }
             return BadRequest("Id must be greater than 0");
-        } 
+        }
+
+
+        [HttpGet("{id:int}")]
+        [ApiVersion("1.0")]
+        [Route("InvoiceDtls")]
+        public ActionResult GetInvoiceDtls(int id)
+        {
+            var InvoiceDtls = _context.InvoiceDtls.Where(InvoiceDtls => InvoiceDtls.InvoiceId.Equals(id)).Select(InvoiceDtls =>
+                          new
+                          {
+                       InvoiceDtls.Id,
+                       InvoiceDtls.InvoiceId,
+                       InvoiceDtls.ProductId,
+                       InvoiceDtls.ProductPrice, 
+                   }).ToList();
+            return Ok(InvoiceDtls);
+
+        }
     }
 }

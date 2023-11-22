@@ -1,6 +1,7 @@
 ﻿using BillingAPI.DTOS;
 using BillingAPI.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
  
 namespace BillingAPI.Controllers
@@ -24,7 +25,7 @@ namespace BillingAPI.Controllers
         {
             if (id > 0)
             {
-                
+
                 var address = _context.Address.Find(id);
                 DtoAddress dtoAddress = new DtoAddress();
                 if (address != null)
@@ -42,9 +43,30 @@ namespace BillingAPI.Controllers
                 {
                     return BadRequest("Address not found");
                 }
-               
+
             }
             return BadRequest("Id must be greater than 0");
+        }
+
+
+        [HttpGet]
+        [ApiVersion("1.0")]
+        [Route("Addresses")]
+        public ActionResult GetAddresses()
+        {
+            var Addresses = _context.Address.Where(Address => Address.status.Equals(true)).Select(Address =>
+                   new
+                   {
+                       Address.id,
+                       Address.address,
+                       Address.city,
+                       Address.province,
+                       Address.country,
+                       Address.postalCode,
+                       Address.status
+                   }).ToList();
+
+            return Ok(Addresses);
         }
     }
 }
