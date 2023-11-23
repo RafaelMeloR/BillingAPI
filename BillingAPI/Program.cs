@@ -44,10 +44,24 @@ var app = builder.Build();
 app.UseCors();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
+if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI(); 
+}
+
+if (app.Environment.IsProduction())
+{
+    app.UseSwagger(c =>
+    {
+        c.RouteTemplate = "api/swagger/{documentname}/swagger.json";
+    });
+    //app.UseSwaggerUI();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/api/swagger/v1/swagger.json", "API V1");
+        c.RoutePrefix = "api/abc/swagger";
+    });
 }
 
 app.UseCors("policies");
