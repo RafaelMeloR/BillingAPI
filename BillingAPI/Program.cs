@@ -47,7 +47,10 @@ app.UseCors();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI(); 
+    app.UseSwaggerUI();
+
+    app.MapGet("/debug/routes", (IEnumerable<EndpointDataSource> endpointSources) =>
+       string.Join("\n", endpointSources.SelectMany(source => source.Endpoints)));
 }
 
 if (app.Environment.IsProduction())
@@ -62,6 +65,9 @@ if (app.Environment.IsProduction())
         c.SwaggerEndpoint("/api/swagger/v1/swagger.json", "API V1");
         c.RoutePrefix = "api/abc/swagger";
     });
+
+    app.MapGet("/debug/routes", (IEnumerable<EndpointDataSource> endpointSources) =>
+       string.Join("\n", endpointSources.SelectMany(source => source.Endpoints)));
 }
 
 app.UseCors("policies");
