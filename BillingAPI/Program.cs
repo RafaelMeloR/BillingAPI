@@ -42,15 +42,12 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 app.UseCors();
-
+app.UseRouting();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
-
-    app.MapGet("/debug/routes", (IEnumerable<EndpointDataSource> endpointSources) =>
-       string.Join("\n", endpointSources.SelectMany(source => source.Endpoints)));
+    app.UseSwaggerUI(); 
 }
 
 if (app.Environment.IsProduction())
@@ -63,11 +60,9 @@ if (app.Environment.IsProduction())
     app.UseSwaggerUI(c =>
     {
         c.SwaggerEndpoint("/api/swagger/v1/swagger.json", "API V1");
-        c.RoutePrefix = "api/abc/swagger";
+        c.RoutePrefix = "api/swagger";
     });
-
-    app.MapGet("/debug/routes", (IEnumerable<EndpointDataSource> endpointSources) =>
-       string.Join("\n", endpointSources.SelectMany(source => source.Endpoints)));
+     
 }
 
 app.UseCors("policies");
