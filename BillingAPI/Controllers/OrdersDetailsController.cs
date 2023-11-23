@@ -20,7 +20,6 @@ namespace BillingAPI.Controllers
 
         [HttpGet("{id:int}")]
         [ApiVersion("1.0")]
-        [Route("OrdersDetail")]
         public ActionResult<OrdersDetails> GetOrdersDetail(int id)
         {
             if (id > 0)
@@ -42,7 +41,7 @@ namespace BillingAPI.Controllers
             return BadRequest("Id must be greater than 0");
         }
 
-        [HttpGet("{id:int}")]
+        [HttpGet]
         [ApiVersion("1.0")]
         [Route("OrdersDetails")]
         public ActionResult GetOrdersDetails(int id)

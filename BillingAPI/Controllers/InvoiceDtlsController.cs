@@ -20,20 +20,19 @@ namespace BillingAPI.Controllers
 
         [HttpGet("{id:int}")]
         [ApiVersion("1.0")]
-        [Route("InvoiceDtl")]
         public ActionResult<InvoiceDtls> GetInvoiceDtl(int id)
         {
             if (id > 0)
             {
-                var invoiceDtls = _context.InvoiceDtls.Find(id);
-                DtoInvoiceDtls dtoInvoiceDtls = new DtoInvoiceDtls();
-                if (invoiceDtls != null)
+                var invoiceDtl = _context.InvoiceDtls.Find(id);
+                DtoInvoiceDtls dtoInvoiceDtl = new DtoInvoiceDtls();
+                if (invoiceDtl != null)
                 {
-                    dtoInvoiceDtls.Id = invoiceDtls.Id;
-                    dtoInvoiceDtls.InvoiceId = invoiceDtls.InvoiceId;
-                    dtoInvoiceDtls.ProductId = invoiceDtls.ProductId;
-                    dtoInvoiceDtls.ProductPrice = invoiceDtls.ProductPrice;
-                    return Ok(dtoInvoiceDtls);
+                    dtoInvoiceDtl.Id = invoiceDtl.Id;
+                    dtoInvoiceDtl.InvoiceId = invoiceDtl.InvoiceId;
+                    dtoInvoiceDtl.ProductId = invoiceDtl.ProductId;
+                    dtoInvoiceDtl.ProductPrice = invoiceDtl.ProductPrice;
+                    return Ok(dtoInvoiceDtl);
                 }
                 else
                 {
@@ -44,7 +43,7 @@ namespace BillingAPI.Controllers
         }
 
 
-        [HttpGet("{id:int}")]
+        [HttpGet]
         [ApiVersion("1.0")]
         [Route("InvoiceDtls")]
         public ActionResult GetInvoiceDtls(int id)

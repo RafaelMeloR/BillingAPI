@@ -20,7 +20,7 @@ namespace BillingAPI.Controllers
 
         [HttpGet("{id:int}")]
         [ApiVersion("1.0")] 
-        public ActionResult<Orders> GetOrders(int id)
+        public ActionResult<Orders> GetOrder(int id)
         {
             if (id > 0)
             {
