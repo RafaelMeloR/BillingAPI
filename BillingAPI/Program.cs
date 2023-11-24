@@ -62,7 +62,7 @@ if (app.Environment.IsProduction())
         c.SwaggerEndpoint("/api/swagger/v1/swagger.json", "API V1");
         c.RoutePrefix = "api/swagger";
     });
-     //hola
+     
 }
 
 app.UseCors("policies");

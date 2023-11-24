@@ -55,11 +55,11 @@ namespace BillingAPI.Controllers
         [HttpGet]
         [ApiVersion("1.0")]
         [Route("Users")]
-        public ActionResult GetUsers()
+        public ActionResult<User> GetUsers()
         {
             var users = _context.User.Select(user =>
-                                                            new
-                                                            {
+            new
+             {
                                 user.id,
                                 user.userName,
                                 user.password,

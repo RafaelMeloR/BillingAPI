@@ -52,7 +52,7 @@ namespace BillingAPI.Controllers
         [HttpGet]
         [ApiVersion("1.0")]
         [Route("Invoices")]
-        public ActionResult GetInvoices()
+        public ActionResult<Invoice> GetInvoices()
         {
             var Invoices = _context.Invoice.Where(Invoice => Invoice.InvoiceStatus.Equals(true)).Select(Invoice =>
             new

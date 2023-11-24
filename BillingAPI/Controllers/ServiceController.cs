@@ -43,7 +43,7 @@ namespace BillingAPI.Controllers
         [HttpGet]
         [ApiVersion("1.0")]
         [Route("Services")]
-        public ActionResult GetServices()
+        public ActionResult<Service> GetServices()
         {
             var services = _context.Service.Select(service =>
                                                 new
