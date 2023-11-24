@@ -44,7 +44,7 @@ namespace BillingAPI.Controllers
         [HttpGet]
         [ApiVersion("1.0")]
         [Route("OrdersDetails")]
-        public ActionResult GetOrdersDetails(int id)
+        public ActionResult<OrdersDetails> GetOrdersDetails(int id)
         {
             var ordersDetails = _context.OrdersDetails.Where(ordersDetails => ordersDetails.OrderId.Equals(id)).Select(ordersDetails =>
                                      new

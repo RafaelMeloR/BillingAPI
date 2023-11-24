@@ -52,7 +52,7 @@ namespace BillingAPI.Controllers
         [HttpGet]
         [ApiVersion("1.0")]
         [Route("Addresses")]
-        public ActionResult GetAddresses()
+        public ActionResult<Address> GetAddresses()
         {
             var Addresses = _context.Address.Where(Address => Address.status.Equals(true)).Select(Address =>
                    new

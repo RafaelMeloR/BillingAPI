@@ -46,7 +46,7 @@ namespace BillingAPI.Controllers
         [HttpGet]
         [ApiVersion("1.0")]
         [Route("InvoiceDtls")]
-        public ActionResult GetInvoiceDtls(int id)
+        public ActionResult<InvoiceDtls> GetInvoiceDtls(int id)
         {
             var InvoiceDtls = _context.InvoiceDtls.Where(InvoiceDtls => InvoiceDtls.InvoiceId.Equals(id)).Select(InvoiceDtls =>
                           new

@@ -47,7 +47,7 @@ namespace BillingAPI.Controllers
         [HttpGet]
         [ApiVersion("1.0")]
         [Route("Payments")]
-        public ActionResult GetPayments()
+        public ActionResult<Payment> GetPayments()
         {
             var payments = _context.Payment.Select(payment =>
                                                 new

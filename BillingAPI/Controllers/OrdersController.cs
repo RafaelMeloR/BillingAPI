@@ -48,7 +48,7 @@ namespace BillingAPI.Controllers
         [HttpGet]
         [ApiVersion("1.0")]
         [Route("Orders")]
-        public ActionResult GetOrders()
+        public ActionResult<Orders> GetOrders()
         {
             var orders = _context.Orders.Select(orders =>
                                      new
