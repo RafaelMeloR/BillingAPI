@@ -11,7 +11,7 @@
         public decimal GST { get; set; }
         public decimal QST { get; set; }
         public string InvoiceNumber { get; set; }
-        public string InvoiceStatus { get; set; } 
+        public bool InvoiceStatus { get; set; } 
         public decimal InvoiceAmount { get; set; } 
         
     }
