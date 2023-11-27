@@ -61,5 +61,22 @@ namespace BillingAPI.Controllers
                                      }).ToList();
             return Ok(payments);
         }
+
+        [HttpPost]
+        [ApiVersion("1.0")]
+        [Route("AddPayment")]
+        public ActionResult<Payment> AddPayment(Payment payment)
+        {
+            if (payment != null)
+            {
+                _context.Payment.Add(payment);
+                _context.SaveChanges();
+                return Ok("Payment added successfully");
+            }
+            else
+            {
+                return BadRequest("Payment cannot be null");
+            }
+        }
     }
 }
