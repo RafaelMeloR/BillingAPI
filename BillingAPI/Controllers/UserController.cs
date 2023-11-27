@@ -93,10 +93,10 @@ namespace BillingAPI.Controllers
 
         [HttpPost]
         [ApiVersion("1.0")]
-        [Route("login")]
+        [Route("loginEmail")]
         public ActionResult<User> LoginUserPassword([FromBody] string email, string password)
         {
-            var user = _context.User.Where(user => user.userName.Equals(email) && user.password.Equals(password)).FirstOrDefault();
+            var user = _context.User.Where(user => user.email.Equals(email) && user.password.Equals(password)).FirstOrDefault();
             if (user != null)
             {
                 return Ok(user);
