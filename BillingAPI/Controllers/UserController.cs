@@ -90,5 +90,21 @@ namespace BillingAPI.Controllers
                 return BadRequest("User not found");
             }
         }
+
+        [HttpPost]
+        [ApiVersion("1.0")]
+        [Route("login")]
+        public ActionResult<User> LoginUserPassword([FromBody] string email, string password)
+        {
+            var user = _context.User.Where(user => user.userName.Equals(email) && user.password.Equals(password)).FirstOrDefault();
+            if (user != null)
+            {
+                return Ok(user);
+            }
+            else
+            {
+                return BadRequest("User not found");
+            }
+        }
     }
 }
