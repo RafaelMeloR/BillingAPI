@@ -30,7 +30,6 @@ namespace BillingAPI.Controllers
                 {
                     dtoUser.id = user.id;
                     dtoUser.userName = user.userName;
-                    dtoUser.password = user.password;
                     dtoUser.email = user.email;
                     dtoUser.name = user.name;
                     dtoUser.lastName = user.lastName;
@@ -62,7 +61,6 @@ namespace BillingAPI.Controllers
              {
                                 user.id,
                                 user.userName,
-                                user.password,
                                 user.email,
                                 user.name,
                                 user.lastName,

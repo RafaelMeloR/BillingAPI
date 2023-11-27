@@ -20,11 +20,22 @@ namespace BillingAPI.Controllers
 
         [HttpGet("{id:int}")]
         [ApiVersion("1.0")]
-        public ActionResult<Invoice> GetInvoice(int id)
+        public ActionResult<DtoInvoice> GetInvoice(int id)
         {
             if (id > 0)
             {
                 var invoice = _context.Invoice.Find(id);
+                var ListInvoiceDtls = _context.InvoiceDtls
+                    .Where(InvoiceDtl => InvoiceDtl.InvoiceId.Equals(id))
+                    .Select(InvoiceDtls =>
+                 new DtoInvoiceDtls
+                   {
+                     Id=InvoiceDtls.Id,
+                     InvoiceId= InvoiceDtls.InvoiceId,
+                     ProductId = InvoiceDtls.ProductId,
+                     ProductPrice=InvoiceDtls.ProductPrice, 
+                   }).ToList();
+
                 DtoInvoice dtoInvoice = new DtoInvoice();
                 if (invoice != null)
                 {
@@ -39,6 +50,7 @@ namespace BillingAPI.Controllers
                     dtoInvoice.InvoiceNumber = invoice.InvoiceNumber;
                     dtoInvoice.InvoiceStatus = invoice.InvoiceStatus;
                     dtoInvoice.InvoiceAmount = invoice.InvoiceAmount;
+                    dtoInvoice.InvoiceDtls = ListInvoiceDtls;
                     return Ok(dtoInvoice);
                 }
                 else

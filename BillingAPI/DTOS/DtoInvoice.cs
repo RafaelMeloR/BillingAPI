@@ -13,13 +13,12 @@
        public string InvoiceNumber { get; set; }
        public string InvoiceStatus { get; set; }
         public decimal InvoiceAmount { get; set; }
-          
-        public class InvoiceDtls
-        {
-            public int Id { get; set; }
-            public int InvoiceId { get; set; }
-            public int ProductId { get; set; }
-            public decimal ProductPrice { get; set; }
-        }
+        
+        //INVOICES DETAILS
+            public List<DtoInvoiceDtls> InvoiceDtls { get; set; }
+      
+
+       public string  ErrorMessage { get; set; }
+       
     }
 }
