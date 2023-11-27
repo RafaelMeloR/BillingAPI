@@ -31,7 +31,6 @@ namespace BillingAPI.Controllers
                     dtoOrders.Id = orders.Id;
                     dtoOrders.creationDate = orders.creationDate;
                     dtoOrders.userId = orders.userId;
-                    dtoOrders.accountId = orders.accountId;
                     dtoOrders.updatedDate = orders.updatedDate;
                     dtoOrders.status = orders.status;
                     dtoOrders.accountNumber = orders.accountNumber;
@@ -48,7 +47,7 @@ namespace BillingAPI.Controllers
         [HttpGet]
         [ApiVersion("1.0")]
         [Route("Orders")]
-        public ActionResult<Orders> GetOrders()
+        public ActionResult<DtoOrders> GetOrders()
         {
             var orders = _context.Orders.Select(orders =>
                                      new
@@ -56,7 +55,6 @@ namespace BillingAPI.Controllers
                               orders.Id,
                               orders.creationDate,
                               orders.userId,
-                              orders.accountId,
                               orders.updatedDate,
                               orders.status,
                               orders.accountNumber

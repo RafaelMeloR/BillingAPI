@@ -2,6 +2,7 @@
 using BillingAPI.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace BillingAPI.Controllers
 {
@@ -82,6 +83,50 @@ namespace BillingAPI.Controllers
                 Invoice.InvoiceAmount
                 }).ToList();
             return Ok(Invoices);
+        }
+
+
+        [HttpGet]
+        [ApiVersion("1.0")]
+        [Route("UserInvoices")]
+        public ActionResult<DtoInvoice> GetInvoicesByUser(int UserId)
+        {
+            var order = _context.Orders
+                .Where(order => order.userId.Equals(UserId))
+                .Select(order => order.Id)
+                .FirstOrDefault();
+
+            if (order == 0)
+            {
+                if (_context.User.Find(UserId)!=null)
+                {
+                    return BadRequest("User has no Invoices");
+                }
+                else
+                {
+                    return BadRequest("User not found");
+                }
+               
+            }
+            else
+            {
+                var Invoices = _context.Invoice.Where(Invoice => Invoice.OrderId.Equals(order)).Select(Invoice =>
+                new
+                {
+                    Invoice.Id,
+                    Invoice.OrderId,
+                    Invoice.InvoiceDueDate,
+                    Invoice.InvoiceTotal,
+                    Invoice.InvoiceDate,
+                    Invoice.InvoicePeriod,
+                    Invoice.GST,
+                    Invoice.QST,
+                    Invoice.InvoiceNumber,
+                    Invoice.InvoiceStatus,
+                    Invoice.InvoiceAmount                   
+                }).ToList();
+                return Ok(Invoices);
+            }
         }
     }
 }
