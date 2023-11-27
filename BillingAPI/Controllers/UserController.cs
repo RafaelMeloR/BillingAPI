@@ -1,6 +1,13 @@
 ﻿using BillingAPI.DTOS;
 using BillingAPI.Models; 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
+using System.Diagnostics.Metrics;
+using System.Net.Mail;
+using System.Net;
+using System.Numerics;
+using System.Xml.Linq;
 
 namespace BillingAPI.Controllers
 {
@@ -38,7 +45,7 @@ namespace BillingAPI.Controllers
                     dtoUser.ipAddress = user.ipAddress;
                     dtoUser.macAddress = user.macAddress;
                     dtoUser.lastLogin = user.lastLogin;
-                    dtoUser.usertype = user.usertype;
+                    dtoUser.userType = user.usertype;
                     dtoUser.status = user.status;
                     return Ok(dtoUser);
                 }
@@ -100,6 +107,41 @@ namespace BillingAPI.Controllers
             if (user != null)
             {
                 return Ok(user);
+            }
+            else
+            {
+                return BadRequest("User not found");
+            }
+        }
+
+        [HttpPost]
+        [ApiVersion("1.0")]
+        [Route("create")]
+        public ActionResult<DtoCreateUser> CreateUser([FromBody] DtoCreateUser Dtouser)
+        {
+            if (Dtouser != null)
+            {
+
+                _context.Database.ExecuteSqlRaw(
+            "EXEC [dbo].[CreateUser] @UserName, @Password, @Email, @Name, @LastName, @Address, @City, @Province, @Country, @PostalCode, @Phone, @IpAddress, @MacAddress, @LastLogin, @UserType, @Status",
+                new SqlParameter("@UserName", Dtouser.userName),
+                new SqlParameter("@Password", Dtouser.password),
+                new SqlParameter("@Email", Dtouser.email),
+                new SqlParameter("@Name", Dtouser.name),
+                new SqlParameter("@LastName", Dtouser.lastName),
+                new SqlParameter("@Address", Dtouser.address),
+                new SqlParameter("@City", Dtouser.city),
+                new SqlParameter("@Province", Dtouser.province),
+                new SqlParameter("@Country", Dtouser.country),
+                new SqlParameter("@PostalCode", Dtouser.postalCode),
+                new SqlParameter("@Phone", Dtouser.phone),
+                new SqlParameter("@IpAddress", "10.0.0.1"),
+                new SqlParameter("@MacAddress", "00-B0-D0-63-C2-26"),
+                new SqlParameter("@LastLogin", DateTime.Now),
+                new SqlParameter("@UserType", Dtouser.userType),
+                new SqlParameter("@Status", 1)
+        );
+                return Ok(Dtouser);
             }
             else
             {
