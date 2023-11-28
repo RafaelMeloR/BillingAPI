@@ -117,9 +117,9 @@ namespace BillingAPI.Controllers
         [HttpPost]
         [ApiVersion("1.0")]
         [Route("loginEmailPass")]
-        public ActionResult<DtoUserFull> LoginUserPasswordFull([FromHeader] string email, string password)
+        public ActionResult<DtoUserFull> LoginUserPasswordFull([FromBody] DtoUserLogin login)
         {
-            var user = _context.User.Where(user => user.email.Equals(email) && user.password.Equals(password)).FirstOrDefault();
+            var user = _context.User.Where(user => user.email.Equals(login.Email) && user.password.Equals(login.Password)).FirstOrDefault();
             DtoUserFull dtoUserFull = new DtoUserFull();
 
             if (user != null)
