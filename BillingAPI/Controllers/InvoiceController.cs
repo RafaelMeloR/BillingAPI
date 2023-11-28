@@ -28,9 +28,6 @@ namespace BillingAPI.Controllers
                 
                 var invoice = _context.Invoice.Find(id);
 
-              
-
-
                 var ListInvoiceDtls = _context.InvoiceDtls
                     .Where(InvoiceDtl => InvoiceDtl.InvoiceId.Equals(id))
                     .Select(InvoiceDtls =>
