@@ -101,7 +101,7 @@ namespace BillingAPI.Controllers
         [HttpPost]
         [ApiVersion("1.0")]
         [Route("loginEmail")]
-        public ActionResult<User> LoginUserPassword([FromHeader] string email, string password)
+        public ActionResult<DtoUserFull> LoginUserPassword([FromHeader] string email, string password)
         {
             var user = _context.User.Where(user => user.email.Equals(email) && user.password.Equals(password)).FirstOrDefault();
             if (user != null)
@@ -112,6 +112,75 @@ namespace BillingAPI.Controllers
             {
                 return BadRequest("User not found");
             }
+        }
+
+        [HttpPost]
+        [ApiVersion("1.0")]
+        [Route("loginEmailPass")]
+        public ActionResult<DtoUserFull> LoginUserPasswordFull([FromHeader] string email, string password)
+        {
+            var user = _context.User.Where(user => user.email.Equals(email) && user.password.Equals(password)).FirstOrDefault();
+            DtoUserFull dtoUserFull = new DtoUserFull();
+
+            if (user != null)
+            {
+                dtoUserFull.user = user;
+                dtoUserFull.address = _context.Address.Where(address => address.id.Equals(user.addressId)).FirstOrDefault();
+
+                var order = _context.Orders
+                .Where(order => order.userId.Equals(user.id))
+                .Select(order => order.Id)
+                .FirstOrDefault();
+
+                if (order == 0)
+                {
+                    if (_context.User.Find(user.id) != null)
+                    {
+                        return BadRequest("User has no Invoices");
+                    }
+                    else
+                    {
+                        return BadRequest("User not found");
+                    }
+
+                }
+                else
+                {
+                    var ListInvoiceDtls = 
+
+                    dtoUserFull.invoice = _context.Invoice.Where(Invoice => Invoice.OrderId.Equals(order)).Select(Invoice =>
+                    new DtoInvoice
+                    {
+                       Id= Invoice.Id,
+                       OrderId= Invoice.OrderId,
+                       InvoiceDueDate= Invoice.InvoiceDueDate,
+                       InvoiceTotal= Invoice.InvoiceTotal,
+                       InvoiceDate=Invoice.InvoiceDate,
+                       InvoicePeriod= Invoice.InvoicePeriod,
+                       GST= Invoice.GST,
+                       QST = Invoice.QST,
+                       InvoiceNumber= Invoice.InvoiceNumber,
+                       InvoiceStatus= Invoice.InvoiceStatus,
+                       InvoiceAmount= Invoice.InvoiceAmount,
+                       InvoiceDtls= _context.InvoiceDtls
+                   .Where(InvoiceDtl => InvoiceDtl.InvoiceId.Equals(Invoice.Id))
+                   .Select(InvoiceDtls =>
+                new DtoInvoiceDtls
+                {
+                    Id = InvoiceDtls.Id,
+                    InvoiceId = InvoiceDtls.InvoiceId,
+                    ProductId = InvoiceDtls.ProductId,
+                    ProductPrice = InvoiceDtls.ProductPrice,
+                }).ToList(),
+                    }).ToList();
+                    return Ok(dtoUserFull);
+                } 
+            }
+            else
+            {
+                return BadRequest("User not found");
+            }
+             
         }
 
         [HttpPost]
