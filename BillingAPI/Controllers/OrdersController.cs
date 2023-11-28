@@ -34,6 +34,7 @@ namespace BillingAPI.Controllers
                     dtoOrders.updatedDate = orders.updatedDate;
                     dtoOrders.status = orders.status;
                     dtoOrders.accountNumber = orders.accountNumber;
+                    dtoOrders.invoicePeriod = orders.invoicePeriod;
                     return Ok(dtoOrders);
                 }
                 else
@@ -57,7 +58,8 @@ namespace BillingAPI.Controllers
                               orders.userId,
                               orders.updatedDate,
                               orders.status,
-                              orders.accountNumber
+                              orders.accountNumber,
+                              orders.invoicePeriod
                           }).ToList();
             return Ok(orders);
         }
