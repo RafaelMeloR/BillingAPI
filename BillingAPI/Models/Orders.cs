@@ -8,6 +8,7 @@
         public DateTime updatedDate { get; set; }
         public bool status { get; set; }
         public string accountNumber { get; set; }
+        public int invoicePeriod { get; set; }
 
     }
 }
