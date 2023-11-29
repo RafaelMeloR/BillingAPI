@@ -36,9 +36,8 @@ namespace BillingAPI.Controllers
                 if (user != null)
                 {
                     dtoUser.id = user.id;
-                    dtoUser.userName = user.userName;
                     dtoUser.email = user.email;
-                    dtoUser.name = user.name;
+                    dtoUser.firstName = user.firstName;
                     dtoUser.lastName = user.lastName;
                     dtoUser.addressId = user.addressId;
                     dtoUser.phone = user.phone;
@@ -67,9 +66,8 @@ namespace BillingAPI.Controllers
             new
              {
                                 user.id,
-                                user.userName,
                                 user.email,
-                                user.name,
+                                user.firstName,
                                 user.lastName,
                                 user.addressId,
                                 user.phone,
@@ -87,7 +85,7 @@ namespace BillingAPI.Controllers
         [Route("login")]
         public ActionResult<User> Login([FromBody] User credentials)
         {
-            var user = _context.User.Where(user => user.userName.Equals(credentials.userName) && user.password.Equals(credentials.password)).FirstOrDefault();
+            var user = _context.User.Where(user => user.email.Equals(credentials.email) && user.password.Equals(credentials.password)).FirstOrDefault();
             if (user != null)
             {
                 return Ok(user);
@@ -178,7 +176,7 @@ namespace BillingAPI.Controllers
             }
             else
             {
-                return BadRequest("User not found");
+                return  BadRequest();
             }
              
         }
@@ -192,11 +190,10 @@ namespace BillingAPI.Controllers
             {
 
                 _context.Database.ExecuteSqlRaw(
-            "EXEC [dbo].[CreateUser] @UserName, @Password, @Email, @Name, @LastName, @Address, @City, @Province, @Country, @PostalCode, @Phone, @IpAddress, @MacAddress, @LastLogin, @UserType, @Status",
-                new SqlParameter("@UserName", Dtouser.userName),
+            "EXEC [dbo].[CreateUser]  @Password, @Email, @Name, @LastName, @Address, @City, @Province, @Country, @PostalCode, @Phone, @IpAddress, @MacAddress, @LastLogin, @UserType, @Status",
                 new SqlParameter("@Password", Dtouser.password),
                 new SqlParameter("@Email", Dtouser.email),
-                new SqlParameter("@Name", Dtouser.name),
+                new SqlParameter("@Name", Dtouser.firstName),
                 new SqlParameter("@LastName", Dtouser.lastName),
                 new SqlParameter("@Address", Dtouser.address),
                 new SqlParameter("@City", Dtouser.city),
