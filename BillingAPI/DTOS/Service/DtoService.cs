@@ -1,4 +1,4 @@
-﻿namespace BillingAPI.DTOS
+﻿namespace BillingAPI.DTOS.Service
 {
     public class DtoService
     {

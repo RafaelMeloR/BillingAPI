@@ -1,7 +1,9 @@
-﻿using BillingAPI.DTOS;
+﻿using BillingAPI.DTOS.Payment;
 using BillingAPI.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 
 namespace BillingAPI.Controllers
 {
@@ -65,12 +67,16 @@ namespace BillingAPI.Controllers
         [HttpPost]
         [ApiVersion("1.0")]
         [Route("AddPayment")]
-        public ActionResult<Payment> AddPayment(Payment payment)
+        public ActionResult<Payment> AddPayment(DtoPaymentAction paymentDto)
         {
-            if (payment != null)
+            if (paymentDto != null)
             {
-                _context.Payment.Add(payment);
-                _context.SaveChanges();
+              _context.Database.ExecuteSqlRaw("EXECUTE [dbo].[InsertPaymentDetails] @InvoiceId, @Amount, @PaymentMethod, @PaymentDate",
+                 new SqlParameter("@InvoiceId",paymentDto.InvoiceId),
+                 new SqlParameter("@Amount",paymentDto.Amount),
+                 new SqlParameter("@PaymentMethod",paymentDto.PaymentMethod),
+                 new SqlParameter("@PaymentDate", DateTime.Now));
+
                 return Ok("Payment added successfully");
             }
             else
