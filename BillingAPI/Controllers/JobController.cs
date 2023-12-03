@@ -1,5 +1,6 @@
 ﻿using BillingAPI.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace BillingAPI.Controllers
 {
@@ -21,8 +22,10 @@ namespace BillingAPI.Controllers
         [Route("/ManuallyRunJob")]
         public ActionResult run()
         {  
-            HttpClient client = new HttpClient();
-            var response = client.PostAsync("https://jobbillingapi4.azurewebsites.net/api/HttpTrigger1", null);
+           // HttpClient client = new HttpClient();
+            //var response = client.PostAsync("https://jobbillingapi4.azurewebsites.net/api/HttpTrigger1", null);
+
+            _context.Database.ExecuteSqlRaw("EXECUTE [dbo].[JobGenerateInvoice] ");
 
             return Ok("Job executed");
         }
