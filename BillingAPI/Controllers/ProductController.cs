@@ -1,4 +1,4 @@
-﻿using BillingAPI.DTOS;
+﻿using BillingAPI.DTOS.Product;
 using BillingAPI.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -56,6 +56,23 @@ namespace BillingAPI.Controllers
                                product.serviceId,
                            }).ToList();
             return Ok(products);
+        }
+        [HttpPost]
+        [ApiVersion("1.0")]
+        [Route("AddProduct")]
+        public ActionResult<Product> AddProduct([FromBody] DtoProductCreate dtoProduct)
+        {
+            if (dtoProduct != null)
+            {
+                Product product = new Product();
+                product.Name = dtoProduct.Name;
+                product.productUniquePrice = dtoProduct.productUniquePrice;
+                product.serviceId = dtoProduct.serviceId;
+                _context.Product.Add(product);
+                _context.SaveChanges();
+                return Ok("Product added");
+            }
+            return BadRequest("Product not added");
         }
     }
 }

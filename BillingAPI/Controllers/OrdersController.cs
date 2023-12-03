@@ -1,7 +1,9 @@
-﻿using BillingAPI.DTOS;
+﻿using BillingAPI.DTOS.Orders;
 using BillingAPI.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 
 namespace BillingAPI.Controllers
 {
@@ -62,6 +64,20 @@ namespace BillingAPI.Controllers
                               orders.invoicePeriod
                           }).ToList();
             return Ok(orders);
+        }
+
+        [HttpPost]
+        [ApiVersion("1.0")]
+        [Route("CreateOrder")]
+        public ActionResult<Orders> createOrder([FromBody] DtoOrdersCreate order)
+        {
+            _context.Database.ExecuteSqlRaw("EXECUTE [dbo].[CreateOrder]  @userId,@ProductId,@accountNumber",
+               new SqlParameter("@userId", order.userId),
+               new SqlParameter("@ProductId", order.ProductId),
+               new SqlParameter("@accountNumber", order.accountNumber));
+            Orders orders = new Orders();
+            orders = _context.Orders.Where(x => x.userId == order.userId).FirstOrDefault(); 
+            return orders;
         }
     }
 }

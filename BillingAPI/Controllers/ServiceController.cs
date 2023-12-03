@@ -1,4 +1,4 @@
-﻿using BillingAPI.DTOS;
+﻿using BillingAPI.DTOS.Service;
 using BillingAPI.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -53,5 +53,22 @@ namespace BillingAPI.Controllers
                            }).ToList();
             return Ok(services);
         }
+
+        [HttpPost]
+        [ApiVersion("1.0")]
+        [Route("CreateService")]
+        public ActionResult<Service> CreateService([FromBody] DtoServiceCreate dtoService)
+        {
+            if (dtoService != null)
+            {
+                Service service = new Service(); 
+                service.name = dtoService.name;
+                _context.Service.Add(service);
+                _context.SaveChanges();
+                return Ok("Service created");
+            }
+            return BadRequest("Service not created");
+        }
+      
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace BillingAPI.DTOS
+﻿namespace BillingAPI.DTOS.Orders
 {
     public class DtoOrders
     {

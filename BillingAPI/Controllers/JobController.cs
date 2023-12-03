@@ -18,11 +18,13 @@ namespace BillingAPI.Controllers
 
         [HttpPost]
         [ApiVersion("1.0")]
-        [Route("/run")]
-        public ActionResult<HttpResponse> run()
-        { 
-            Console.WriteLine("Job run");
-            return Ok("Job run");
+        [Route("/ManuallyRunJob")]
+        public ActionResult run()
+        {  
+            HttpClient client = new HttpClient();
+            var response = client.PostAsync("https://jobbillingapi4.azurewebsites.net/api/HttpTrigger1", null);
+
+            return Ok("Job executed");
         }
 
     }

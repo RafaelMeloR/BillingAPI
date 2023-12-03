@@ -1,4 +1,4 @@
-﻿using BillingAPI.DTOS;
+﻿using BillingAPI.DTOS.Orders;
 using BillingAPI.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
