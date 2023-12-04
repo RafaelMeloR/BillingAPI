@@ -8,6 +8,7 @@ using System.Net.Mail;
 using System.Net;
 using System.Numerics;
 using System.Xml.Linq;
+using System;
 
 namespace BillingAPI.Controllers
 {
@@ -117,9 +118,10 @@ namespace BillingAPI.Controllers
         [Route("loginEmailPass")]
         public ActionResult<DtoUserFull> LoginUserPasswordFull([FromBody] DtoUserLogin login)
         {
+
             var user = _context.User.Where(user => user.email.Equals(login.Email) && user.password.Equals(login.Password)).FirstOrDefault();
             DtoUserFull dtoUserFull = new DtoUserFull();
-
+            Random random = new Random();
             if (user != null)
             {
                 dtoUserFull.user = user;
@@ -134,16 +136,18 @@ namespace BillingAPI.Controllers
                 {
                     if (_context.User.Find(user.id) != null)
                     {
-                        return BadRequest("User has no Invoices");
+                        _context.Database.ExecuteSqlRaw(
+                            "EXEC [dbo].[CreateOrder]  @UserId, @ProductId, @accountNumber",
+                            new SqlParameter("@UserId", user.id),
+                            new SqlParameter("@ProductId", 1),
+                            //new SqlParameter("@accountNumber", ("A" + random.Next(100, 1000)))
+                            new SqlParameter("@accountNumber", ("A" + user.phone))
+                            );
                     }
-                    else
-                    {
-                        return BadRequest("User not found");
-                    }
-
+                    
                 }
-                else
-                {
+                
+                
                     var ListInvoiceDtls = 
 
                     dtoUserFull.invoice = _context.Invoice.Where(Invoice => Invoice.OrderId.Equals(order)).Select(Invoice =>
@@ -163,16 +167,16 @@ namespace BillingAPI.Controllers
                        InvoiceDtls= _context.InvoiceDtls
                    .Where(InvoiceDtl => InvoiceDtl.InvoiceId.Equals(Invoice.Id))
                    .Select(InvoiceDtls =>
-                new DtoInvoiceDtls
-                {
+                    new DtoInvoiceDtls
+                     {
                     Id = InvoiceDtls.Id,
                     InvoiceId = InvoiceDtls.InvoiceId,
                     ProductId = InvoiceDtls.ProductId,
                     ProductPrice = InvoiceDtls.ProductPrice,
-                }).ToList(),
+                    }).ToList(),
                     }).ToList();
                     return Ok(dtoUserFull);
-                } 
+                 
             }
             else
             {
