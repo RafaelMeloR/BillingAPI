@@ -142,7 +142,7 @@ namespace BillingAPI.Controllers
         [HttpPost]
         [ApiVersion("1.0")]
         [Route("CreateInvoiceManually")]
-        public ActionResult<Invoice> CreateInvoiceManually( int orderId)
+        public ActionResult CreateInvoiceManually( int orderId)
         {
             if (orderId != 0)
             {
