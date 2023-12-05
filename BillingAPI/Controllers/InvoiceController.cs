@@ -2,6 +2,7 @@
 using BillingAPI.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
 namespace BillingAPI.Controllers
@@ -137,5 +138,36 @@ namespace BillingAPI.Controllers
                 return Ok(Invoices);
             }
         }
+
+        [HttpPost]
+        [ApiVersion("1.0")]
+        [Route("CreateInvoiceManually")]
+        public ActionResult<Invoice> CreateInvoiceManually( int orderId)
+        {
+            if (orderId != 0)
+            {
+                var order = _context.Orders
+                    .Where(order => order.Id.Equals(orderId))
+                    .Select(order => order.Id)
+                    .FirstOrDefault();
+
+                if (order == 0)
+                {
+                    return BadRequest("Order not found");
+                }
+                else
+                {
+                   _context.Database.ExecuteSqlRaw("EXEC [GenerateInvoice] @orderId ",
+                       new SqlParameter ("@orderId",orderId));
+                    
+                    return Ok("Invoice Created");
+                }
+            }
+            else
+            {
+                return BadRequest("Invoice is null");
+            }
+        }
+
     }
 }
